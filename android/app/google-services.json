@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "284293399874",
+    "firebase_url": "https://health-recommendation.firebaseio.com",
+    "project_id": "health-recommendation",
+    "storage_bucket": "health-recommendation.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:284293399874:android:730727bba62d092360f4db",
+        "android_client_info": {
+          "package_name": "com.example.pluginCG"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "284293399874-ukhqbfvdgdd6sjgsu8ajsgu7kh9rjlg4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pluginCG",
+            "certificate_hash": "8d886cbe7d148ae7bdb60b39f7be5b802c4ce49b"
+          }
+        },
+        {
+          "client_id": "284293399874-o98f7v7oun5t7oq2i65md68peer08449.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYMWh-yI0PUPCB3A2fDM5VABTzsaSkCkU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "284293399874-o98f7v7oun5t7oq2i65md68peer08449.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
