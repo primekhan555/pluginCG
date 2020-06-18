@@ -396,7 +396,6 @@ class _RemaindersState extends State<Remainders> {
                 ),
               );
             })
-            // actions: <Widget>[Icon(Icons.ac_unit)],
             ));
   }
 

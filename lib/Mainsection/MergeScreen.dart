@@ -146,7 +146,6 @@ class _MergeScreenState extends State<MergeScreen> {
                                     "remind_2_timeStamp": "",
                                   });
                                   docList.forEach((element) {
-                                    print(element);
                                     collecRef.document("$element").delete();
                                   });
                                   Navigator.pop(context);

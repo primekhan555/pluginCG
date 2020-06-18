@@ -85,7 +85,10 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                   )
                                 : ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
-                                    child: Image.network(globals.lUrl),
+                                    child: Image.network(
+                                      globals.lUrl,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                           ),
                           InkWell(
@@ -94,8 +97,6 @@ class _PersonalInfoState extends State<PersonalInfo> {
                             },
                             child: Container(
                               alignment: Alignment.center,
-                              // height: 20,
-                              // width: 20,
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   color: Colors.white //colors.pBlue,
@@ -191,7 +192,6 @@ class _PersonalInfoState extends State<PersonalInfo> {
   pickImage(BuildContext context, String source) async {
     final picture = await picker.getImage(
         source: source == "camera" ? ImageSource.camera : ImageSource.gallery);
-    print(picture.path.toString());
     File croppedImage = await ImageCropper.cropImage(
       sourcePath: picture.path,
       // ratioX: 1.0,

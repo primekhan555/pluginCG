@@ -82,7 +82,7 @@ class _DrawerCState extends State<DrawerC> {
                                 )
                               : ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
-                                  child: Image.network(globals.lUrl),
+                                  child: Image.network(globals.lUrl,fit: BoxFit.cover,),
                                 ),
                         ),
                       ],
@@ -128,7 +128,9 @@ class _DrawerCState extends State<DrawerC> {
                 onTap: () async {
                   SharedPreferences prefs =
                       await SharedPreferences.getInstance();
-                  prefs.setBool("fullRegister", false);
+                  prefs.remove("fullRegister");
+                  prefs.remove("partialRegister");
+                  prefs.setString("uid", "");
                   _auth.signOut();
                   globals.lEmail = "";
                   globals.lName = "";

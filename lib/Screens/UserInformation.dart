@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:pluginCG/Components/AButton.dart';
 import 'package:pluginCG/Components/LoginButton.dart';
@@ -20,6 +21,7 @@ class UserInformation extends StatefulWidget {
 }
 
 class _UserInfoState extends State<UserInformation> {
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   List<String> fieldTitle = [
     "What's Your Name?",
     "What's Your Age",
@@ -154,7 +156,10 @@ class _UserInfoState extends State<UserInformation> {
         }
         SharedPreferences prefs = await SharedPreferences.getInstance();
         String uid = prefs.getString("uid");
-        await Firestore.instance.collection("users").document("$uid").setData({
+        prefs.setString("info", "done");
+        DocumentReference userRef =
+            Firestore.instance.collection("users").document("$uid");
+        userRef.setData({
           "uid": uid,
           "name": globals.lName,
           "country": globals.lCountry,
@@ -162,8 +167,11 @@ class _UserInfoState extends State<UserInformation> {
           "age": globals.lAge,
           "gender": globals.lGender,
           "picUrl": globals.lUrl,
-          "token":""
+          "token": ""
         }).whenComplete(() {
+          _firebaseMessaging.getToken().then((token) {
+            userRef.updateData({"token": "$token"});
+          });
           var newRoute = MaterialPageRoute(builder: (context) => MainScreen());
           Navigator.pushAndRemoveUntil(context, newRoute, (route) => false);
         });

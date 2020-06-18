@@ -99,7 +99,8 @@ class _MainScreenState extends State<MainScreen> {
       _selectedIndex = index;
     });
   }
-    getUserInfo() async {
+
+  getUserInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String uid = prefs.getString("uid");
     globals.uid = uid;
@@ -110,12 +111,12 @@ class _MainScreenState extends State<MainScreen> {
         .then((DocumentSnapshot ds) {
       if (ds.exists) {
         setState(() {
-        globals.lName = ds.data["name"];
-        globals.lEmail = ds.data["email"];
-        globals.lUrl = ds.data["picUrl"];
-        globals.lGender = ds.data["gender"];
-        globals.lCountry = ds.data["country"];
-        globals.lAge = ds.data["age"];
+          globals.lName = ds.data["name"];
+          globals.lEmail = ds.data["email"];
+          globals.lUrl = ds.data["picUrl"];
+          globals.lGender = ds.data["gender"];
+          globals.lCountry = ds.data["country"];
+          globals.lAge = ds.data["age"];
         });
       }
     });

@@ -34,25 +34,35 @@ class _PinVerificationState extends State<PinVerification> {
   void _verifyPhoneNumber() async {
     final PhoneVerificationCompleted verificationCompleted =
         (AuthCredential phoneAuthCredential) {
-      debugPrint("verification completed called");
-      _auth.signInWithCredential(phoneAuthCredential).whenComplete(() {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MainScreen(),
-          ),
-        );
+      _auth.signInWithCredential(phoneAuthCredential).then((currentUser) async {
+        globals.uid = currentUser.user.uid;
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString("uid", "${currentUser.user.uid}");
+        Firestore.instance
+            .collection("users")
+            .document("${currentUser.user.uid}")
+            .get()
+            .then((value) {
+          if (value.exists) {
+            navigate(context, MainScreen());
+          } else {
+            navigate(
+                context,
+                UserInformation(
+                  data: [0, 1, 2, 3],
+                ));
+          }
+        });
+        return currentUser.user;
       });
     };
 
     final PhoneVerificationFailed verificationFailed =
         (AuthException authException) {
-      debugPrint("verification failed");
     };
 
     final PhoneCodeSent codeSent =
         (String verificationId, [int forceResendingToken]) async {
-      debugPrint("code sended to the number");
       SnackBar(
         content: Text("Please check your phone for the verification code"),
       );
@@ -61,7 +71,6 @@ class _PinVerificationState extends State<PinVerification> {
 
     final PhoneCodeAutoRetrievalTimeout codeAutoRetrievalTimeout =
         (String verificationId) {
-      debugPrint("auto retreival called");
       _verificationId = verificationId;
     };
     await _auth.verifyPhoneNumber(
@@ -74,31 +83,29 @@ class _PinVerificationState extends State<PinVerification> {
   }
 
   void _signInWithPhoneNumber() async {
-    debugPrint("this is the code ${_smsController.text}");
     final AuthCredential credential = PhoneAuthProvider.getCredential(
       verificationId: _verificationId,
       smsCode: _smsController.text,
     );
     // final FirebaseUser user =
-    await _auth.signInWithCredential(credential).then((currentUser)async {
-      globals.uid=currentUser.user.uid;
-      SharedPreferences prefs= await SharedPreferences.getInstance();
+    await _auth.signInWithCredential(credential).then((currentUser) async {
+      globals.uid = currentUser.user.uid;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString("uid", "${currentUser.user.uid}");
-       Firestore.instance
+      Firestore.instance
           .collection("users")
           .document("${currentUser.user.uid}")
           .get()
           .then((value) {
-            if (value.exists) {
-               navigate(context, MainScreen());
-            }
-            else
-        navigate(
-            context,
-            UserInformation(
-              data: [1, 2, 3],
-            ));
-          });   
+        if (value.exists) {
+          navigate(context, MainScreen());
+        } else
+          navigate(
+              context,
+              UserInformation(
+                data: [0, 1, 2, 3],
+              ));
+      });
       return currentUser.user;
     });
   }

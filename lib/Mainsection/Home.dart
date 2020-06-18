@@ -75,7 +75,6 @@ class _HomeState extends State<Home> {
                 items: cities,
                 strict: false,
                 onValueChanged: (value) {
-                  print(value.toString());
                 },
               )),
           bigContainers("Scheduled Tests", "No Scheduled tests", "tests",width),

@@ -19,15 +19,12 @@ Future handleFBSignIn(context) async {
       await facebookLogin.logIn(['email']);
   switch (facebookLoginResult.status) {
     case FacebookLoginStatus.cancelledByUser:
-      print("Cancelled");
       break;
     case FacebookLoginStatus.error:
-      print("error");
       Toast.show("an error occured While login through facebook", context,
           gravity: Toast.BOTTOM, duration: Toast.LENGTH_SHORT);
       break;
     case FacebookLoginStatus.loggedIn:
-      print("Logged In");
       final accessToken = facebookLoginResult.accessToken.token;
       final facebookAuthCred =
           FacebookAuthProvider.getCredential(accessToken: accessToken);

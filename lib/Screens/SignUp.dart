@@ -7,6 +7,7 @@ import 'package:pluginCG/Components/LoginIcon.dart';
 import 'package:pluginCG/Components/LogoText.dart';
 import 'package:pluginCG/Components/TermsText.dart';
 import 'package:pluginCG/Mainsection/MainScreen.dart';
+import 'package:pluginCG/Screens/ForgotPassword.dart';
 import 'package:pluginCG/Screens/SignIn.dart';
 import 'package:pluginCG/Screens/SignUpEmail.dart';
 import 'package:pluginCG/Screens/Splash.dart';
@@ -15,8 +16,8 @@ import 'fbLogin.dart' as fbLogin;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pluginCG/resources/Color.dart' as colors;
 import 'package:shared_preferences/shared_preferences.dart';
-
-final FirebaseAuth _auth = FirebaseAuth.instance;
+import 'package:pluginCG/resources/warning.dart' as alert;
+import 'package:pluginCG/Globals/Globals.dart' as globals;
 
 class SignUp extends StatefulWidget {
   SignUp({Key key}) : super(key: key);
@@ -28,7 +29,35 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   String password, email;
+  bool showpass = true;
+
+  emailCheck() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.containsKey("info")) {
+      String info = prefs.getString("info");
+      if (info == "pending") {
+        alert.showWarning("Email Verification", "Please Check Your Mail Box",
+            context, Colors.red);
+      }
+    }
+    if (prefs.containsKey("reset")) {
+      String key = prefs.getString("reset");
+      if (key == "hitAlert") {
+        alert.showWarning(
+            "ResetPassword", "Please Check Your Email", context, Colors.red);
+      }
+    }
+    prefs.remove("reset");
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    emailCheck();
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -42,9 +71,10 @@ class _SignUpState extends State<SignUp> {
               children: <Widget>[
                 Container(
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       LogoText(
-                        margin: height / 10,
+                        margin: height / 15.5,
                         padding: height / 5,
                       ),
                       Form(
@@ -58,30 +88,53 @@ class _SignUpState extends State<SignUp> {
                       Container(
                         padding: EdgeInsets.only(right: 25, top: 5),
                         alignment: Alignment.centerRight,
-                        child: Text(
-                          "Forgot Password?",
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.w900),
+                        child: InkWell(
+                          onTap: () {
+                            var route = MaterialPageRoute(
+                                builder: (context) => ForgotPassword());
+                            Navigator.push(context, route);
+                          },
+                          child: Text(
+                            "Forgot Password?",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w900),
+                          ),
                         ),
                       ),
                       InkWell(
                         onTap: () async {
-                          print(this.email);
-                          print(this.password);
                           final form = _formKey.currentState;
-                          
                           if (form.validate()) {
                             form.save();
-                            SharedPreferences prefs=await SharedPreferences.getInstance();
-                            AuthResult user =
-                                await _auth.signInWithEmailAndPassword(
-                                    email: this.email, password: this.password).then((currentUser) {
-                                      prefs.setString("uid", "${currentUser.user.uid}");
-                                      var newRoute=MaterialPageRoute(builder: (context)=>UserInformation(data:[0,1,2,3]));
-                                      Navigator.pushAndRemoveUntil(context, newRoute, (route) => false);
-                                    });
-                                    
-                            user.user.sendEmailVerification();
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            await _auth
+                                .signInWithEmailAndPassword(
+                                    email: this.email, password: this.password)
+                                .then((currentUser) {
+                              if (currentUser.user.isEmailVerified) {
+                                prefs.setString(
+                                    "uid", "${currentUser.user.uid}");
+                                globals.lEmail = this.email;
+                                globals.lPassword = this.password;
+                                if (prefs.containsKey("info")) {
+                                  String info = prefs.getString("info");
+                                  if (info == "pending") {
+                                    navigate(context,
+                                        UserInformation(data: [0, 1, 2, 3]));
+                                  } else {
+                                    navigate(context, MainScreen());
+                                  }
+                                }
+                              } else {
+                                alert.showWarning(
+                                    "Verification Alert",
+                                    "Please Check Your Email",
+                                    context,
+                                    Colors.red);
+                              }
+                            });
                           } else {
                             _scaffoldKey.currentState.showSnackBar(
                               SnackBar(
@@ -154,11 +207,29 @@ class _SignUpState extends State<SignUp> {
       child: TextFormField(
         style: TextStyle(color: Colors.white),
         cursorColor: Colors.white,
+        obscureText: fieldtype == "pass" ? showpass : false,
         decoration: InputDecoration(
             focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.white)),
             hintText: "$hint",
-            hintStyle: TextStyle(color: Colors.white)),
+            hintStyle: TextStyle(color: Colors.white),
+            suffixIcon: fieldtype == "pass"
+                ? IconButton(
+                    icon: Icon(
+                      showpass
+                          ? FontAwesomeIcons.solidEye
+                          : FontAwesomeIcons.solidEyeSlash,
+                      color: Colors.white,
+                      size: 15,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        showpass = !showpass;
+                      });
+                    },
+                  )
+                : null,
+            ),
         onChanged: (newValue) {
           fieldtype == "email"
               ? this.email = newValue
@@ -169,51 +240,8 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  // Future _handleFBSignIn() async {
-  //   FacebookLogin facebookLogin = FacebookLogin();
-  //   FacebookLoginResult facebookLoginResult =
-  //       await facebookLogin.logIn(['email']);
-  //   switch (facebookLoginResult.status) {
-  //     case FacebookLoginStatus.cancelledByUser:
-  //       print("Cancelled");
-  //       break;
-  //     case FacebookLoginStatus.error:
-  //       print("error");
-  //       Toast.show("an error occured While login through facebook", context,
-  //           gravity: Toast.BOTTOM, duration: Toast.LENGTH_SHORT);
-  //       break;
-  //     case FacebookLoginStatus.loggedIn:
-  //       print("Logged In");
-  //       final accessToken = facebookLoginResult.accessToken.token;
-  //       final facebookAuthCred =
-  //           FacebookAuthProvider.getCredential(accessToken: accessToken);
-  //       final user = await _auth.signInWithCredential(facebookAuthCred);
-  //       var graph = await http.get(
-  //           "https://graph.facebook.com/v6.0/me?fields=name,first_name,last_name,email,picture.height(320).width(320)&access_token=$accessToken");
-  //       var profile = json.decode(graph.body);
-  //       setState(() {
-  //         globals.lName = profile['name'];
-  //         globals.lEmail = profile['email'];
-  //         globals.uid = user.user.uid;
-  //         globals.lUrl = profile['picture']['data']['url'];
-  //       });
-  //       SharedPreferences prefs = await SharedPreferences.getInstance();
-  //       prefs.setString("uid", "${user.user.uid}");
-  //       prefs.setBool("partialRegister", true);
-  //       prefs.setBool("fullRegister", false);
-  //       Firestore.instance
-  //           .collection("users")
-  //           .document("${user.user.uid}")
-  //           .setData({
-  //         "uid": "${user.user.uid}",
-  //         "name": "${profile['name']}",
-  //         "email": "${profile['email']}",
-  //         "picUrl": "${profile['picture']['data']['url']}"
-  //       });
-  //       var newRoute = MaterialPageRoute(builder: (context) => MainScreen());
-  //       Navigator.pushAndRemoveUntil(context, newRoute, (route) => false);
-  //       break;
-  //   }
-  //   // return facebookLoginResult;
-  // }
+  navigate(BuildContext context, Widget screen) {
+    var newRoute = MaterialPageRoute(builder: (context) => screen);
+    Navigator.pushAndRemoveUntil(context, newRoute, (route) => false);
+  }
 }

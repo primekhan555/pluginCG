@@ -85,7 +85,6 @@ class _TestState extends State<Test> {
                 strict: false,
                 onValueChanged: (value) {
                   int index = disease.indexOf(value);
-                  print(value);
                   setState(() {
                     this.index = index;
                   });

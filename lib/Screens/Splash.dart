@@ -1,74 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pluginCG/Components/AButton.dart';
-import 'package:pluginCG/Mainsection/MainScreen.dart';
 import 'package:pluginCG/Screens/SignIn.dart';
 import 'package:pluginCG/Screens/SignUp.dart';
-import 'package:pluginCG/Screens/UserInformation.dart';
 import 'package:pluginCG/resources/Assets.dart' as assets;
 import 'package:pluginCG/resources/Color.dart' as colors;
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:pluginCG/Globals/Globals.dart' as globals;
-import 'package:firebase_messaging/firebase_messaging.dart';
 
-class Splash extends StatefulWidget {
-  Splash({Key key}) : super(key: key);
-
-  @override
-  _SplashState createState() => _SplashState();
-}
-
-class _SplashState extends State<Splash> {
-  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-  check() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.containsKey("partialRegister")) {
-      bool key = prefs.getBool("partialRegister");
-      if (key == true) {
-        var newRoute = MaterialPageRoute(
-            builder: (context) => UserInformation(data: [0, 1, 2, 3]));
-        Navigator.pushAndRemoveUntil(context, newRoute, (route) => false);
-      }
-    }
-    if (prefs.containsKey("fullRegister")) {
-      bool key = prefs.getBool("fullRegister");
-      if (key == true) {
-        await getUserInfo();
-        var newRoute = MaterialPageRoute(builder: (context) => MainScreen());
-        Navigator.pushAndRemoveUntil(context, newRoute, (route) => false);
-      }
-    }
-  }
-
-  getUserInfo() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String uid = prefs.getString("uid");
-    globals.uid = uid;
-    DocumentReference docRef =
-        Firestore.instance.collection("users").document("$uid");
-    docRef.get().then((DocumentSnapshot ds) {
-      if (ds.exists) {
-        setState(() {
-          globals.lName = ds.data["name"];
-          globals.lEmail = ds.data["email"];
-          globals.lUrl = ds.data["picUrl"];
-          globals.lGender = ds.data["gender"];
-          globals.lCountry = ds.data["country"];
-          globals.lAge = ds.data["age"];
-        });
-      }
-    });
-    _firebaseMessaging.getToken().then((token) {
-      print(token);
-      docRef.updateData({"token": "$token"});
-    });
-  }
-
-  @override
-  void initState() {
-    check();
-    super.initState();
-  }
+class Splash extends StatelessWidget {
+  const Splash({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

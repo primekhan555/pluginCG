@@ -18,7 +18,7 @@ class NewTest extends StatefulWidget {
 }
 
 class _NewTestState extends State<NewTest> {
-  String date = "Date", time = "Time";//, testName = "";
+  String date = "Date", time = "Time"; //, testName = "";
   DateTime _todayDate;
   String name;
   int years, months, days, hours, minutes;
@@ -122,8 +122,7 @@ class _NewTestState extends State<NewTest> {
               margin: EdgeInsets.only(top: 10, right: 25),
               child: FlatButton(
                   color: colors.pCyan,
-                  onPressed: ()async {
-                    print(globals.uid);
+                  onPressed: () async {
                     if (date == "Date") {
                       alert.showWarning(
                           "Alert", "please Enter Date", context, Colors.red);
@@ -135,12 +134,11 @@ class _NewTestState extends State<NewTest> {
                               this.hours, this.minutes)
                           .millisecondsSinceEpoch;
                       String min = ((mili / 1000) / 60).round().toString();
-                    await  Firestore.instance
+                      DocumentReference docRef = Firestore.instance
                           .collection("tests")
-                          .document("${globals.uid}")
-                          .collection("${globals.uid}")
-                          .document()
-                          .setData({
+                          .document("${globals.uid}");
+                      docRef.setData({"test": "test"});
+                      docRef.collection("${globals.uid}").document().setData({
                         "testName": "${widget.testName}",
                         "date": "$date",
                         "time": "$time",

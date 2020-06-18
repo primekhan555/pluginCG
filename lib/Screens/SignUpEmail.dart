@@ -15,10 +15,6 @@ import 'package:pluginCG/resources/Color.dart' as colors;
 import 'fbLogin.dart' as fbLogin;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'UserInformation.dart';
-
-final FirebaseAuth _auth = FirebaseAuth.instance;
-
 class SignUpEmail extends StatefulWidget {
   SignUpEmail({Key key}) : super(key: key);
 
@@ -29,6 +25,8 @@ class SignUpEmail extends StatefulWidget {
 class _SignUpState extends State<SignUpEmail> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   String password, email;
   bool showpass = true;
   @override
@@ -46,43 +44,37 @@ class _SignUpState extends State<SignUpEmail> {
                   child: Column(
                     children: <Widget>[
                       LogoText(
-                        margin: height / 10,
+                        margin: height / 15,
                         padding: height / 5,
                       ),
                       Form(
                           key: _formKey,
                           child: Column(
                             children: <Widget>[
-                              textField("Email", "email", false),
-                              textField("Password", "pass", true),
+                              textField("Email", "email"),
+                              textField("Password", "pass"),
                             ],
                           )),
                       Padding(padding: EdgeInsets.only(top: 10)),
                       InkWell(
                         onTap: () async {
-                          print(this.email);
-                          print(this.password);
                           final form = _formKey.currentState;
-
                           if (form.validate()) {
                             SharedPreferences prefs =
                                 await SharedPreferences.getInstance();
                             form.save();
-                            AuthResult user; // =
                             await _auth
                                 .createUserWithEmailAndPassword(
                                     email: globals.lEmail,
                                     password: globals.lPassword)
                                 .then((currentUser) {
                               prefs.setString("uid", currentUser.user.uid);
+                              currentUser.user.sendEmailVerification();
+                              prefs.setString("info", "pending");
                               var route = MaterialPageRoute(
-                                  builder: (context) => UserInformation(data: [0,1,2,3],));
+                                  builder: (context) => SignUp());
                               Navigator.push(context, route);
                             });
-                            user.user.sendEmailVerification();
-                            if (user.user.isEmailVerified) {
-
-                            }
                           } else {
                             _scaffoldKey.currentState.showSnackBar(
                               SnackBar(
@@ -147,11 +139,10 @@ class _SignUpState extends State<SignUpEmail> {
         });
   }
 
-  textField(String hint, String fieldtype, bool type) {
+  textField(String hint, String fieldtype) {
     return Container(
       height: 55,
       padding: EdgeInsets.only(left: 25, right: 25),
-      // color: Colors.blue,
       child: TextFormField(
         style: TextStyle(color: Colors.white),
         cursorColor: Colors.white,
@@ -186,52 +177,4 @@ class _SignUpState extends State<SignUpEmail> {
       ),
     );
   }
-
-  // Future _handleFBSignIn() async {
-  //   FacebookLogin facebookLogin = FacebookLogin();
-  //   FacebookLoginResult facebookLoginResult =
-  //       await facebookLogin.logIn(['email']);
-  //   switch (facebookLoginResult.status) {
-  //     case FacebookLoginStatus.cancelledByUser:
-  //       print("Cancelled");
-  //       break;
-  //     case FacebookLoginStatus.error:
-  //       print("error");
-  //       Toast.show("an error occured While login through facebook", context,
-  //           gravity: Toast.BOTTOM, duration: Toast.LENGTH_SHORT);
-  //       break;
-  //     case FacebookLoginStatus.loggedIn:
-  //       print("Logged In");
-  //       final accessToken = facebookLoginResult.accessToken.token;
-  //       final facebookAuthCred =
-  //           FacebookAuthProvider.getCredential(accessToken: accessToken);
-  //       final user = await _auth.signInWithCredential(facebookAuthCred);
-  //       var graph = await http.get(
-  //           "https://graph.facebook.com/v6.0/me?fields=name,first_name,last_name,email,picture.height(320).width(320)&access_token=$accessToken");
-  //       var profile = json.decode(graph.body);
-  //       setState(() {
-  //         globals.lName = profile['name'];
-  //         globals.lEmail = profile['email'];
-  //         globals.uid = user.user.uid;
-  //         globals.lUrl = profile['picture']['data']['url'];
-  //       });
-  //       SharedPreferences prefs = await SharedPreferences.getInstance();
-  //       prefs.setString("uid", "${user.user.uid}");
-  //       prefs.setBool("partialRegister", true);
-  //       prefs.setBool("fullRegister", false);
-  //       Firestore.instance
-  //           .collection("users")
-  //           .document("${user.user.uid}")
-  //           .setData({
-  //         "uid": "${user.user.uid}",
-  //         "name": "${profile['name']}",
-  //         "email": "${profile['email']}",
-  //         "picUrl": "${profile['picture']['data']['url']}"
-  //       });
-  //       var newRoute = MaterialPageRoute(builder: (context) => MainScreen());
-  //       Navigator.pushAndRemoveUntil(context, newRoute, (route) => false);
-  //       break;
-  //   }
-  //   // return facebookLoginResult;
-  // }
 }
