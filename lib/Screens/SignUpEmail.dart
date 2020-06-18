@@ -78,7 +78,7 @@ class _SignUpState extends State<SignUpEmail> {
                           } else {
                             _scaffoldKey.currentState.showSnackBar(
                               SnackBar(
-                                backgroundColor: Colors.red[700],
+                                backgroundColor: colors.pRed,
                                 content: Text('Fields Empty'),
                               ),
                             );
@@ -144,8 +144,8 @@ class _SignUpState extends State<SignUpEmail> {
       height: 55,
       padding: EdgeInsets.only(left: 25, right: 25),
       child: TextFormField(
-        style: TextStyle(color: Colors.white),
-        cursorColor: Colors.white,
+        style: TextStyle(color: colors.pWhite),
+        cursorColor: colors.pWhite,
         obscureText: fieldtype == "pass" ? showpass : false,
         decoration: InputDecoration(
             suffixIcon: fieldtype == "pass"
@@ -154,7 +154,7 @@ class _SignUpState extends State<SignUpEmail> {
                       showpass
                           ? FontAwesomeIcons.solidEye
                           : FontAwesomeIcons.solidEyeSlash,
-                      color: Colors.white,
+                      color: colors.pWhite,
                       size: 15,
                     ),
                     onPressed: () {
@@ -165,9 +165,9 @@ class _SignUpState extends State<SignUpEmail> {
                   )
                 : null,
             focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.white)),
+                borderSide: BorderSide(color: colors.pWhite)),
             hintText: "$hint",
-            hintStyle: TextStyle(color: Colors.white)),
+            hintStyle: TextStyle(color: colors.pWhite)),
         onChanged: (newValue) {
           fieldtype == "email"
               ? globals.lEmail = newValue

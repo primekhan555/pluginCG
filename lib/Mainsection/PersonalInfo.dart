@@ -22,6 +22,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+    bool orientation =
+        MediaQuery.of(context).orientation.toString().endsWith("portrait");
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -35,29 +37,29 @@ class _PersonalInfoState extends State<PersonalInfo> {
               child: Column(
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.only(
-                      left: 10,
-                      top: 40,
-                      right: 10,
-                    ),
-                    height: 80,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        InkWell(
-                          onTap: () => Navigator.pop(context),
-                          child: Icon(
-                            Icons.arrow_back,
-                            size: 25,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Padding(
-                            padding: EdgeInsets.only(left: width / 4),
-                            child: logo.logo()),
-                      ],
-                    ),
-                  ),
+                      padding: EdgeInsets.only(
+                        left: 10,
+                        top: 40,
+                        right: 10,
+                      ),
+                      height: 80,
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            InkWell(
+                              onTap: () => Navigator.pop(context),
+                              child: Icon(
+                                Icons.arrow_back,
+                                size: 25,
+                                color: colors.pWhite,
+                              ),
+                            ),
+                            Container(
+                                padding: EdgeInsets.only(
+                                    left:
+                                        orientation ? width / 4 : width / 2.65),
+                                child: logo.logo())
+                          ])),
                   Container(
                     width: MediaQuery.of(context).size.width,
                     alignment: Alignment.topCenter,
@@ -70,7 +72,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         children: <Widget>[
                           Container(
                             decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: colors.pWhite,
                                 border:
                                     Border.all(width: 1, color: colors.pBlue),
                                 borderRadius: BorderRadius.circular(10)),
@@ -98,10 +100,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                             child: Container(
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.white //colors.pBlue,
-
-                                  ),
+                                  shape: BoxShape.circle, color: colors.pWhite),
                               child: Icon(
                                 Icons.add,
                                 color: colors.pBlue,
@@ -119,7 +118,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     child: Text(
                       "${globals.lName}",
                       style: TextStyle(
-                          color: Colors.white,
+                          color: colors.pWhite,
                           fontSize: 20,
                           fontWeight: FontWeight.w900,
                           letterSpacing: 1.5),
@@ -156,38 +155,30 @@ class _PersonalInfoState extends State<PersonalInfo> {
     );
   }
 
-  Future showChoiceDialogue(BuildContext context) async {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            backgroundColor: Colors.white,
-            content: Container(
+  Future showChoiceDialogue(BuildContext context) async => showDialog(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+          backgroundColor: colors.pWhite,
+          content: Container(
               height: 140,
-              child: Column(
-                children: <Widget>[
-                  pickerCont.pickerContainer("Select Any", Colors.white,
-                      colors.pBlue, 30, FontWeight.w900, 0),
-                  InkWell(
-                      onTap: () {
-                        pickImage(context, "camera");
-                        Navigator.of(context).pop();
-                      },
-                      child: pickerCont.pickerContainer("Camera", Colors.black,
-                          Colors.grey[200], 50, FontWeight.normal, 5)),
-                  InkWell(
-                      onTap: () {
-                        pickImage(context, "gallery");
-                        Navigator.of(context).pop();
-                      },
-                      child: pickerCont.pickerContainer("Gallery", Colors.black,
-                          Colors.grey[200], 50, FontWeight.normal, 5)),
-                ],
-              ),
-            ),
-          );
-        });
-  }
+              child: Column(children: <Widget>[
+                pickerCont.pickerContainer("Select Any", colors.pWhite,
+                    colors.pBlue, 30, FontWeight.w900, 0),
+                InkWell(
+                    onTap: () {
+                      pickImage(context, "camera");
+                      Navigator.of(context).pop();
+                    },
+                    child: pickerCont.pickerContainer("Camera", Colors.black,
+                        Colors.grey[200], 50, FontWeight.normal, 5)),
+                InkWell(
+                    onTap: () {
+                      pickImage(context, "gallery");
+                      Navigator.of(context).pop();
+                    },
+                    child: pickerCont.pickerContainer("Gallery", Colors.black,
+                        Colors.grey[200], 50, FontWeight.normal, 5)),
+              ]))));
 
   pickImage(BuildContext context, String source) async {
     final picture = await picker.getImage(

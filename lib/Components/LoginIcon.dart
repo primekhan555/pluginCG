@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pluginCG/resources/Color.dart' as colors;
 
 class LoginIcon extends StatelessWidget {
   final IconData icon;
@@ -7,7 +8,7 @@ class LoginIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Icon(icon, size: 40, color: Colors.white),
+      child: Icon(icon, size: 40, color: colors.pWhite),
     );
   }
 }

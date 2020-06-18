@@ -39,14 +39,14 @@ class _SignUpState extends State<SignUp> {
       String info = prefs.getString("info");
       if (info == "pending") {
         alert.showWarning("Email Verification", "Please Check Your Mail Box",
-            context, Colors.red);
+            context, colors.pRed);
       }
     }
     if (prefs.containsKey("reset")) {
       String key = prefs.getString("reset");
       if (key == "hitAlert") {
         alert.showWarning(
-            "ResetPassword", "Please Check Your Email", context, Colors.red);
+            "ResetPassword", "Please Check Your Email", context, colors.pRed);
       }
     }
     prefs.remove("reset");
@@ -97,7 +97,7 @@ class _SignUpState extends State<SignUp> {
                           child: Text(
                             "Forgot Password?",
                             style: TextStyle(
-                                color: Colors.white,
+                                color: colors.pWhite,
                                 fontWeight: FontWeight.w900),
                           ),
                         ),
@@ -132,13 +132,13 @@ class _SignUpState extends State<SignUp> {
                                     "Verification Alert",
                                     "Please Check Your Email",
                                     context,
-                                    Colors.red);
+                                    colors.pRed);
                               }
                             });
                           } else {
                             _scaffoldKey.currentState.showSnackBar(
                               SnackBar(
-                                backgroundColor: Colors.red[700],
+                                backgroundColor: colors.pRed,
                                 content: Text('Fields Empty'),
                               ),
                             );
@@ -205,21 +205,21 @@ class _SignUpState extends State<SignUp> {
       padding: EdgeInsets.only(left: 25, right: 25),
       // color: Colors.blue,
       child: TextFormField(
-        style: TextStyle(color: Colors.white),
-        cursorColor: Colors.white,
+        style: TextStyle(color: colors.pWhite),
+        cursorColor: colors.pWhite,
         obscureText: fieldtype == "pass" ? showpass : false,
         decoration: InputDecoration(
             focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.white)),
+                borderSide: BorderSide(color: colors.pWhite)),
             hintText: "$hint",
-            hintStyle: TextStyle(color: Colors.white),
+            hintStyle: TextStyle(color: colors.pWhite),
             suffixIcon: fieldtype == "pass"
                 ? IconButton(
                     icon: Icon(
                       showpass
                           ? FontAwesomeIcons.solidEye
                           : FontAwesomeIcons.solidEyeSlash,
-                      color: Colors.white,
+                      color: colors.pWhite,
                       size: 15,
                     ),
                     onPressed: () {

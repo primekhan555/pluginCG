@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pluginCG/resources/Color.dart' as colors;
 
 class TermsText extends StatelessWidget {
   const TermsText({Key key}) : super(key: key);
@@ -9,7 +10,7 @@ class TermsText extends StatelessWidget {
       margin: EdgeInsets.only(top: 10),
       child: Text(
         "By signing up, you agree to the Terms of use",
-        style: TextStyle(color: Colors.white, fontSize: 12),
+        style: TextStyle(color: colors.pWhite, fontSize: 12),
       ),
     );
   }

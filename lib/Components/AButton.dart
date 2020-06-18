@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pluginCG/resources/Color.dart' as colors;
 
 class AButton extends StatelessWidget {
   final Color color;
@@ -26,7 +27,7 @@ class AButton extends StatelessWidget {
           child: Text(
             "$name",
             style: TextStyle(
-                color: Colors.white,
+                color: colors.pWhite,
                 fontSize: 20,
                 fontWeight: FontWeight.w900,
                 letterSpacing: 1.5),

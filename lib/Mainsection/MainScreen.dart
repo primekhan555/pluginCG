@@ -46,7 +46,7 @@ class _MainScreenState extends State<MainScreen> {
         leading: IconButton(
           icon: Icon(
             Icons.menu,
-            color: Colors.white,
+            color: colors.pWhite,
             size: 30,
           ),
           onPressed: () => _scaffoldKey.currentState.openDrawer(),
@@ -58,7 +58,7 @@ class _MainScreenState extends State<MainScreen> {
           IconButton(
               icon: Icon(
                 Icons.person,
-                color: Colors.white,
+                color: colors.pWhite,
                 size: 30,
               ),
               onPressed: () {

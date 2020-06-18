@@ -100,7 +100,7 @@ class _HomeState extends State<Home> {
               child: Text(
                 "$hText",
                 style: TextStyle(
-                    color: Colors.white,
+                    color: colors.pWhite,
                     fontWeight: FontWeight.w900,
                     letterSpacing: 1.3),
               ),

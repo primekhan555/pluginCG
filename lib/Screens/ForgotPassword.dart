@@ -27,7 +27,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         leading: IconButton(
             icon: Icon(
               Icons.arrow_back,
-              color: Colors.white,
+              color: colors.pWhite,
             ),
             onPressed: () => Navigator.pop(context)),
       ),

@@ -67,7 +67,7 @@ class _SignInState extends State<SignIn> {
                                   child: Text(
                                     '${countryCode.dialCode}',
                                     style: TextStyle(
-                                        color: Colors.white, fontSize: 17),
+                                        color: colors.pWhite, fontSize: 17),
                                   ));
                             },
                           ),
@@ -77,7 +77,7 @@ class _SignInState extends State<SignIn> {
                           margin: EdgeInsets.only(top: 10),
                           height: 20,
                           child: VerticalDivider(
-                            color: Colors.white,
+                            color: colors.pWhite,
                             width: 2,
                           ),
                         ),
@@ -88,21 +88,21 @@ class _SignInState extends State<SignIn> {
                               padding: EdgeInsets.only(top: 30),
                               child: TextField(
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: colors.pWhite,
                                 ),
-                                cursorColor: Colors.white,
+                                cursorColor: colors.pWhite,
                                 keyboardType: TextInputType.phone,
                                 decoration: InputDecoration(
                                     focusedBorder: UnderlineInputBorder(
                                         borderSide:
-                                            BorderSide(color: Colors.white)),
+                                            BorderSide(color: colors.pWhite)),
                                     border: UnderlineInputBorder(
                                         borderSide:
-                                            BorderSide(color: Colors.white)),
-                                    fillColor: Colors.white,
+                                            BorderSide(color: colors.pWhite)),
+                                    fillColor: colors.pWhite,
                                     hintText: "Phone number",
                                     hintStyle: TextStyle(
-                                      color: Colors.white,
+                                      color: colors.pWhite,
                                     )),
                                 controller: number,
                               ),

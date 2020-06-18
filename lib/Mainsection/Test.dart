@@ -129,7 +129,7 @@ class _TestState extends State<Test> {
               child: Text(
                 "$hText",
                 style: TextStyle(
-                    color: Colors.white,
+                    color: colors.pWhite,
                     fontWeight: FontWeight.w900,
                     letterSpacing: 1.3),
               ),
@@ -185,7 +185,7 @@ class _ChipsState extends State<Chips> {
       child: Chip(
         label: Text(
           "${widget.testsL[widget.index]}",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: colors.pWhite),
         ),
         backgroundColor: colors.pBlue,
         materialTapTargetSize: MaterialTapTargetSize.padded,

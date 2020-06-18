@@ -53,7 +53,7 @@ class _DrawerCState extends State<DrawerC> {
                             child: Icon(
                               Icons.close,
                               size: 35,
-                              color: Colors.white,
+                              color: colors.pWhite,
                             ),
                           ),
                         ],
@@ -68,7 +68,7 @@ class _DrawerCState extends State<DrawerC> {
                       children: <Widget>[
                         Container(
                           decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: colors.pWhite,
                               border: Border.all(width: 1, color: colors.pBlue),
                               borderRadius: BorderRadius.circular(10)),
                           margin: EdgeInsets.only(top: 30),
@@ -94,7 +94,7 @@ class _DrawerCState extends State<DrawerC> {
                       child: Text(
                         "${globals.lName}",
                         style: TextStyle(
-                            color: Colors.white,
+                            color: colors.pWhite,
                             fontSize: 20,
                             fontWeight: FontWeight.w900,
                             letterSpacing: 1.5),
@@ -150,7 +150,7 @@ class _DrawerCState extends State<DrawerC> {
                       child: Text(
                         "SIGN OUT",
                         style: TextStyle(
-                            color: Colors.white,
+                            color: colors.pWhite,
                             fontWeight: FontWeight.w900,
                             fontSize: 17),
                       ),

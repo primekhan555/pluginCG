@@ -6,7 +6,3 @@ String lName = "",
     lGender,
     lCountry="Pakistan",
     lAge = "";
-
-    // String itemValue;
-    // bool checkItem;
-

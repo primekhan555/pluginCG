@@ -50,7 +50,7 @@ class _RemaindersState extends State<Remainders> {
                     ),
                   ),
                   Container(
-                    // color: Colors.red,
+                    // color: colors.pRed,
                     width: width / 10,
                     child: IconButton(
                       icon: FaIcon(
@@ -75,9 +75,9 @@ class _RemaindersState extends State<Remainders> {
             //       onPressed: () {},
             //       icon: Icon(
             //         Icons.menu,
-            //         color: Colors.white,
+            //         color: colors.pWhite,
             //       ),
-            //       label: text("Add Test", 14, FontWeight.normal, Colors.white),
+            //       label: text("Add Test", 14, FontWeight.normal, colors.pWhite),
             //     )),
           ],
         ),
@@ -101,7 +101,7 @@ class _RemaindersState extends State<Remainders> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    text("$hText", 15, FontWeight.w900, Colors.white),
+                    text("$hText", 15, FontWeight.w900, colors.pWhite),
                     InkWell(
                       onTap: () {
                         var route = MaterialPageRoute(
@@ -110,7 +110,7 @@ class _RemaindersState extends State<Remainders> {
                       },
                       child: Icon(
                         Icons.merge_type,
-                        color: Colors.white,
+                        color: colors.pWhite,
                       ),
                     )
                   ],
@@ -279,7 +279,7 @@ class _RemaindersState extends State<Remainders> {
               return SingleChildScrollView(
                 child: Container(
                   height: height,
-                  color: Colors.white,
+                  color: colors.pWhite,
                   child: Column(
                     children: <Widget>[
                       Container(
@@ -294,7 +294,7 @@ class _RemaindersState extends State<Remainders> {
                                 children: <Widget>[
                                   icon(Icons.menu),
                                   Text("Add Reminder",
-                                      style: TextStyle(color: Colors.white)),
+                                      style: TextStyle(color: colors.pWhite)),
                                 ],
                               ),
                             ),
@@ -384,7 +384,7 @@ class _RemaindersState extends State<Remainders> {
                         child: MaterialButton(
                           child: Text(
                             "Cancel",
-                            style: TextStyle(color: Colors.red),
+                            style: TextStyle(color: colors.pRed),
                           ),
                           onPressed: () {
                             Navigator.pop(context);
@@ -401,7 +401,7 @@ class _RemaindersState extends State<Remainders> {
 
   icon(IconData icon) => Icon(
         icon,
-        color: Colors.white,
+        color: colors.pWhite,
       );
   dateTimeCon(String value) {
     return Container(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pluginCG/resources/Color.dart' as colors;
 
 class LoginButton extends StatelessWidget {
   final String btnText;
@@ -16,7 +17,7 @@ class LoginButton extends StatelessWidget {
       child: Text(
         "$btnText",
         style: TextStyle(
-            color: Colors.white,
+            color: colors.pWhite,
             fontWeight: FontWeight.w900,
             letterSpacing: 1.8),
       ),

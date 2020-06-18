@@ -149,8 +149,8 @@ class _PinVerificationState extends State<PinVerification> {
                     keyboardType: TextInputType.phone,
                     autoFocus: false,
                     decoration: UnderlineDecoration(
-                      textStyle: TextStyle(color: Colors.white, fontSize: 18),
-                      color: Colors.white,
+                      textStyle: TextStyle(color: colors.pWhite, fontSize: 18),
+                      color: colors.pWhite,
                       gapSpaces: [2, 2, 10, 2, 2],
                       obscureStyle: ObscureStyle(
                         isTextObscure: false,
@@ -162,7 +162,7 @@ class _PinVerificationState extends State<PinVerification> {
                   padding: EdgeInsets.only(top: 20),
                   height: 20,
                   child: Divider(
-                    color: Colors.white,
+                    color: colors.pWhite,
                     indent: width / 3.2,
                     endIndent: width / 3.2,
                     thickness: 0.5,
@@ -191,7 +191,7 @@ class _PinVerificationState extends State<PinVerification> {
       child: Text(
         "$value",
         style: TextStyle(
-            color: Colors.white,
+            color: colors.pWhite,
             fontWeight: fontWeight,
             fontSize: fontSize,
             letterSpacing: letterSpacing),

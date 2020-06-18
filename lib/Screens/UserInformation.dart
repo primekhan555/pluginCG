@@ -48,7 +48,7 @@ class _UserInfoState extends State<UserInformation> {
               child: Text(
                 "${fieldTitle[widget.data[index]]}",
                 style: TextStyle(
-                    color: Colors.white,
+                    color: colors.pWhite,
                     fontSize: 20,
                     fontWeight: FontWeight.w900),
               ),
@@ -77,7 +77,7 @@ class _UserInfoState extends State<UserInformation> {
                                         padding: EdgeInsets.only(top: 17),
                                         child: Text('${countryCode.name}',
                                             style: TextStyle(
-                                                color: Colors.white,
+                                                color: colors.pWhite,
                                                 fontSize: 17)));
                                   },
                                 ),
@@ -188,8 +188,8 @@ class _UserInfoState extends State<UserInformation> {
           controller: _controller,
           keyboardType: type,
           textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.white),
-          cursorColor: Colors.white,
+          style: TextStyle(color: colors.pWhite),
+          cursorColor: colors.pWhite,
           onChanged: (value) {
             if (widget.data[index] == 0) {
               globals.lName = value;
@@ -203,7 +203,7 @@ class _UserInfoState extends State<UserInformation> {
     Flushbar(
       title: "$title",
       message: "$message",
-      backgroundColor: Colors.red,
+      backgroundColor: colors.pRed,
       duration: Duration(seconds: 2),
       flushbarPosition: FlushbarPosition.TOP,
     )..show(context);

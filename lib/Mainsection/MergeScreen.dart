@@ -37,12 +37,14 @@ class _MergeScreenState extends State<MergeScreen> {
         centerTitle: true,
         backgroundColor: colors.pBlue,
         title: logo.logo(),
-        leading:IconButton(icon: icon(Icons.arrow_back), onPressed: ()=>Navigator.pop(context)),
+        leading: IconButton(
+            icon: icon(Icons.arrow_back),
+            onPressed: () => Navigator.pop(context)),
         actions: <Widget>[
           IconButton(
             icon: Icon(
               Icons.check,
-              color: Colors.white,
+              color: colors.pWhite,
             ),
             onPressed: () {
               if (testList.isEmpty) {
@@ -99,7 +101,7 @@ class _MergeScreenState extends State<MergeScreen> {
               return SingleChildScrollView(
                 child: Container(
                   height: height,
-                  color: Colors.white,
+                  color: colors.pWhite,
                   child: Column(
                     children: <Widget>[
                       Container(
@@ -114,7 +116,7 @@ class _MergeScreenState extends State<MergeScreen> {
                                 children: <Widget>[
                                   icon(Icons.menu),
                                   Text("Add Reminder",
-                                      style: TextStyle(color: Colors.white)),
+                                      style: TextStyle(color: colors.pWhite)),
                                 ],
                               ),
                             ),
@@ -191,7 +193,7 @@ class _MergeScreenState extends State<MergeScreen> {
                         child: MaterialButton(
                           child: Text(
                             "Cancel",
-                            style: TextStyle(color: Colors.red),
+                            style: TextStyle(color: colors.pRed),
                           ),
                           onPressed: () {
                             Navigator.pop(context);
@@ -262,7 +264,7 @@ class _MergeScreenState extends State<MergeScreen> {
 
   icon(IconData icon) => Icon(
         icon,
-        color: Colors.white,
+        color: colors.pWhite,
       );
 }
 
@@ -303,21 +305,15 @@ class _CardItemState extends State<CardItem> {
             names = list;
           },
         ),
-        Container(
-            width: 135,
-            child: Text(
-              "${widget.testName}",
-              overflow: TextOverflow.ellipsis,
-            )),
-        Container(
-            alignment: Alignment.centerRight,
-            width: 85,
-            child: Text("${widget.testDate}")),
-        Container(
-            alignment: Alignment.centerRight,
-            width: 70,
-            child: Text("${widget.testTime}")),
+        container(135, "${widget.testName}"),
+        container(85, "${widget.testDate}", alignment: Alignment.centerRight),
+        container(70, "${widget.testTime}", alignment: Alignment.centerRight),
       ],
     ));
   }
+
+  container(double width, String text, {Alignment alignment}) => Container(
+      alignment: alignment ?? Alignment.centerLeft,
+      width: width,
+      child: Text("${widget.testName}", overflow: TextOverflow.ellipsis));
 }

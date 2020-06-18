@@ -33,7 +33,7 @@ class _NewTestState extends State<NewTest> {
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-            color: Colors.white,
+            color: colors.pWhite,
           ),
           onPressed: () => Navigator.pop(context),
         ),
@@ -42,7 +42,7 @@ class _NewTestState extends State<NewTest> {
           IconButton(
               icon: Icon(
                 Icons.person,
-                color: Colors.white,
+                color: colors.pWhite,
                 size: 30,
               ),
               onPressed: () {
@@ -125,10 +125,10 @@ class _NewTestState extends State<NewTest> {
                   onPressed: () async {
                     if (date == "Date") {
                       alert.showWarning(
-                          "Alert", "please Enter Date", context, Colors.red);
+                          "Alert", "please Enter Date", context, colors.pRed);
                     } else if (time == "Time") {
                       alert.showWarning(
-                          "Alert", "please Enter Time", context, Colors.red);
+                          "Alert", "please Enter Time", context, colors.pRed);
                     } else {
                       var mili = DateTime(this.years, this.months, this.days,
                               this.hours, this.minutes)
@@ -161,7 +161,7 @@ class _NewTestState extends State<NewTest> {
                   },
                   child: Text("Confirm",
                       style: TextStyle(
-                          color: Colors.white,
+                          color: colors.pWhite,
                           fontWeight: FontWeight.w900,
                           letterSpacing: 1.3))),
             ),
@@ -172,61 +172,50 @@ class _NewTestState extends State<NewTest> {
     );
   }
 
-  dateTimeCon(double width, String content) {
-    return Container(
-      alignment: Alignment.centerLeft,
-      padding: EdgeInsets.only(left: 10),
-      width: width / 2.4,
-      height: 40,
-      decoration: BoxDecoration(border: Border.all(color: colors.pBlue)),
-      child: Text("$content"),
-    );
-  }
+  dateTimeCon(double width, String content) => Container(
+        alignment: Alignment.centerLeft,
+        padding: EdgeInsets.only(left: 10),
+        width: width / 2.4,
+        height: 40,
+        decoration: BoxDecoration(border: Border.all(color: colors.pBlue)),
+        child: Text("$content"),
+      );
 
-  bigContainers(String hText, List<String> bText, double bheight) {
-    return Container(
-        decoration:
-            BoxDecoration(border: Border.all(width: 1, color: colors.pBlue)),
-        margin: EdgeInsets.only(left: 25, right: 25, top: 20),
-        height: bheight,
-        child: Column(
-          children: <Widget>[
-            Container(
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.only(left: 10),
-              color: colors.pBlue,
-              height: 35,
-              child: Text(
-                "$hText",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: 1.3),
-              ),
-            ),
-            Container(
-              height: bheight - 37,
-              alignment: Alignment.center,
-              child: ListView.builder(
+  bigContainers(String hText, List<String> bText, double bheight) => Container(
+      decoration:
+          BoxDecoration(border: Border.all(width: 1, color: colors.pBlue)),
+      margin: EdgeInsets.only(left: 25, right: 25, top: 20),
+      height: bheight,
+      child: Column(children: <Widget>[
+        Container(
+          alignment: Alignment.centerLeft,
+          padding: EdgeInsets.only(left: 10),
+          color: colors.pBlue,
+          height: 35,
+          child: Text(
+            "$hText",
+            style: TextStyle(
+                color: colors.pWhite,
+                fontWeight: FontWeight.w900,
+                letterSpacing: 1.3),
+          ),
+        ),
+        Container(
+            height: bheight - 37,
+            alignment: Alignment.center,
+            child: ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemCount: bText.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Text("  ${bText[index]}");
-                },
-              ),
-            ),
-          ],
-        ));
-  }
+                itemBuilder: (BuildContext context, int index) =>
+                    Text("  ${bText[index]}")))
+      ]));
 
-  pickDateTime(context, var mode, String type) {
-    return showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return SizedBox(
-            height: 200,
-            child: CupertinoDatePicker(
+  pickDateTime(context, var mode, String type) => showModalBottomSheet(
+      context: context,
+      builder: (context) => SizedBox(
+          height: 200,
+          child: CupertinoDatePicker(
               mode: mode,
               initialDateTime: _todayDate,
               minimumDate: DateTime(
@@ -261,9 +250,5 @@ class _NewTestState extends State<NewTest> {
                         hours + " : " + dateTime.minute.toString() + " " + amPm;
                   }
                 });
-              },
-            ),
-          );
-        });
-  }
+              })));
 }
