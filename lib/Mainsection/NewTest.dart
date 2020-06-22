@@ -7,6 +7,7 @@ import 'package:pluginCG/resources/Logo.dart' as logo;
 import 'package:pluginCG/resources/Color.dart' as colors;
 import 'package:pluginCG/resources/warning.dart' as alert;
 import 'package:pluginCG/Globals/Globals.dart' as globals;
+import 'package:pluginCG/Globals/TestInfo.dart' as testInfo;
 import 'PersonalInfo.dart';
 
 class NewTest extends StatefulWidget {
@@ -137,7 +138,8 @@ class _NewTestState extends State<NewTest> {
                       DocumentReference docRef = Firestore.instance
                           .collection("tests")
                           .document("${globals.uid}");
-                      docRef.setData({"test": "test"});
+                      // docRef.setData({"test": "test"});
+                      testInfo.test(widget.testName, min, globals.uid);
                       docRef.collection("${globals.uid}").document().setData({
                         "testName": "${widget.testName}",
                         "date": "$date",

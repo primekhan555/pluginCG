@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pluginCG/resources/Logo.dart' as logo;
 import 'package:pluginCG/resources/Color.dart' as colors;
 import 'package:pluginCG/Globals/Globals.dart' as globals;
+import 'package:pluginCG/Globals/TestInfo.dart' as testInfo;
 import 'package:pluginCG/resources/warning.dart' as alert;
 
 List<String> testList = [];
@@ -125,7 +126,6 @@ class _MergeScreenState extends State<MergeScreen> {
                                   var mili = DateTime(this.years, this.months,
                                           this.days, this.hours, this.minutes)
                                       .millisecondsSinceEpoch;
-
                                   String min =
                                       ((mili / 1000) / 60).round().toString();
                                   CollectionReference collecRef = Firestore
@@ -133,6 +133,7 @@ class _MergeScreenState extends State<MergeScreen> {
                                       .collection("tests")
                                       .document("${globals.uid}")
                                       .collection("${globals.uid}");
+                                  testInfo.test(testName, min, globals.uid);
                                   collecRef.document().setData({
                                     "testName": "$testName",
                                     "date": "$date",

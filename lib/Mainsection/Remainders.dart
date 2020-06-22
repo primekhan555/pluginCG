@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pluginCG/Mainsection/MergeScreen.dart';
 import 'package:pluginCG/resources/Color.dart' as colors;
 import 'package:pluginCG/Globals/Globals.dart' as globals;
+import 'package:pluginCG/Globals/TestInfo.dart' as testInfo;
 
 class Remainders extends StatefulWidget {
   Remainders({Key key}) : super(key: key);
@@ -22,8 +23,6 @@ class _RemaindersState extends State<Remainders> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    // final height = MediaQuery.of(context).size.height;
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -67,18 +66,6 @@ class _RemaindersState extends State<Remainders> {
               "Test Remainders",
               330,
             ),
-            // Container(
-            //     alignment: Alignment.bottomRight,
-            //     margin: EdgeInsets.only(top: 20, right: 25),
-            //     child: FlatButton.icon(
-            //       color: colors.pCyan,
-            //       onPressed: () {},
-            //       icon: Icon(
-            //         Icons.menu,
-            //         color: colors.pWhite,
-            //       ),
-            //       label: text("Add Test", 14, FontWeight.normal, colors.pWhite),
-            //     )),
           ],
         ),
       ),
@@ -145,10 +132,11 @@ class _RemaindersState extends State<Remainders> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
-                                   Container(
-                                     width: 80,
-                                     child:  text("${data[index]["testName"]}", 14,
-                                        FontWeight.w900, colors.pBlue),),
+                                    Container(
+                                      width: 80,
+                                      child: text("${data[index]["testName"]}",
+                                          14, FontWeight.w900, colors.pBlue),
+                                    ),
                                     data[index]["remind_1"]
                                         ? Container(
                                             color: Colors.grey[300],
@@ -164,12 +152,12 @@ class _RemaindersState extends State<Remainders> {
                                         : Container(),
                                     data[index]["remind_2"]
                                         ? Container(
-                                          color: Colors.grey[300],
-                                          child: text(
-                                            "${data[index]["remind_2_time"]}",
-                                            14,
-                                            FontWeight.w900,
-                                            Colors.black))
+                                            color: Colors.grey[300],
+                                            child: text(
+                                                "${data[index]["remind_2_time"]}",
+                                                14,
+                                                FontWeight.w900,
+                                                Colors.black))
                                         : Container(),
                                     Row(
                                       children: <Widget>[
@@ -210,9 +198,12 @@ class _RemaindersState extends State<Remainders> {
                                       MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Container(
-                                      width: 80,
-                                      child: text("${data[index]["date"]}", 12,
-                                        FontWeight.normal, Colors.black)),
+                                        width: 80,
+                                        child: text(
+                                            "${data[index]["date"]}",
+                                            12,
+                                            FontWeight.normal,
+                                            Colors.black)),
                                     data[index]["remind_1"]
                                         ? Container(
                                             color: Colors.grey[300],
@@ -261,8 +252,11 @@ class _RemaindersState extends State<Remainders> {
     return Text(
       "$text",
       overflow: TextOverflow.ellipsis,
-      style:
-          TextStyle(color: color, fontSize: fontSize, fontWeight: fontWeight,),
+      style: TextStyle(
+        color: color,
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+      ),
     );
   }
 
@@ -303,7 +297,6 @@ class _RemaindersState extends State<Remainders> {
                                   var mili = DateTime(this.years, this.months,
                                           this.days, this.hours, this.minutes)
                                       .millisecondsSinceEpoch;
-
                                   String min =
                                       ((mili / 1000) / 60).round().toString();
                                   DocumentReference docRef = Firestore.instance
@@ -317,6 +310,7 @@ class _RemaindersState extends State<Remainders> {
                                       "time": "$time",
                                       "testTimeStamp": "$min"
                                     });
+                                    testInfo.test(testName, min, globals.uid);
                                   }
 
                                   if (remind == "remind_1") {
@@ -326,6 +320,7 @@ class _RemaindersState extends State<Remainders> {
                                       "remind_1_time": "$time",
                                       "remind_1_timeStamp": "$min"
                                     });
+                                    testInfo.test(testName, min, globals.uid);
                                   }
                                   if (remind == "remind_2") {
                                     docRef.updateData({
@@ -334,8 +329,8 @@ class _RemaindersState extends State<Remainders> {
                                       "remind_2_time": "$time",
                                       "remind_2_timeStamp": "$min"
                                     });
+                                    testInfo.test(testName, min, globals.uid);
                                   }
-
                                   Navigator.pop(context);
                                 },
                                 child: Container(child: icon(Icons.check)))
@@ -351,13 +346,7 @@ class _RemaindersState extends State<Remainders> {
                           padding: EdgeInsets.only(left: 10),
                           decoration: BoxDecoration(
                               border: Border.all(color: colors.pBlue)),
-                          child: Text("$testName")
-                          // TextField(
-                          //   textAlign: TextAlign.center,
-                          //   decoration: InputDecoration(
-                          //       hintText: "Test # 1", border: InputBorder.none),
-                          // ),
-                          ),
+                          child: Text("$testName")),
                       Container(
                         margin: EdgeInsets.only(top: 10),
                         child: Text("Date :"),
@@ -395,8 +384,7 @@ class _RemaindersState extends State<Remainders> {
                   ),
                 ),
               );
-            })
-            ));
+            })));
   }
 
   icon(IconData icon) => Icon(
@@ -418,43 +406,44 @@ class _RemaindersState extends State<Remainders> {
         context: context,
         builder: (context) {
           return SizedBox(
-            height: 200,
-            child: CupertinoDatePicker(
-              mode: mode,
-              initialDateTime: todayDate,
-              minimumDate: new DateTime(2020, 6),
-              use24hFormat: false,
-              onDateTimeChanged: (dateTime) {
-                String amPm, hours;
-                if (type == "time") {
-                  this.hours = dateTime.hour;
-                  this.minutes = dateTime.minute;
-                  if (dateTime.hour < 13) {
-                    hours = dateTime.hour.toString();
-                    amPm = "AM";
-                  } else {
-                    amPm = "PM";
-                    hours = (dateTime.hour.toInt() - 12).toString();
-                  }
-                }
-                _setState(() {
-                  if (type == "date") {
-                    this.years = dateTime.year;
-                    this.months = dateTime.month;
-                    this.days = dateTime.day;
-                    date = dateTime.year.toString() +
-                        " - " +
-                        dateTime.month.toString() +
-                        " - " +
-                        dateTime.day.toString();
-                  } else {
-                    time =
-                        hours + " : " + dateTime.minute.toString() + " " + amPm;
-                  }
-                });
-              },
-            ),
-          );
+              height: 200,
+              child: CupertinoDatePicker(
+                  mode: mode,
+                  initialDateTime: todayDate,
+                  minimumDate: new DateTime(2020, 6),
+                  use24hFormat: false,
+                  onDateTimeChanged: (dateTime) {
+                    String amPm, hours;
+                    if (type == "time") {
+                      this.hours = dateTime.hour;
+                      this.minutes = dateTime.minute;
+                      if (dateTime.hour < 13) {
+                        hours = dateTime.hour.toString();
+                        amPm = "AM";
+                      } else {
+                        amPm = "PM";
+                        hours = (dateTime.hour.toInt() - 12).toString();
+                      }
+                    }
+                    _setState(() {
+                      if (type == "date") {
+                        this.years = dateTime.year;
+                        this.months = dateTime.month;
+                        this.days = dateTime.day;
+                        date = dateTime.year.toString() +
+                            " - " +
+                            dateTime.month.toString() +
+                            " - " +
+                            dateTime.day.toString();
+                      } else {
+                        time = hours +
+                            " : " +
+                            dateTime.minute.toString() +
+                            " " +
+                            amPm;
+                      }
+                    });
+                  }));
         });
   }
 }

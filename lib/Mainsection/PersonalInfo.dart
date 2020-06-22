@@ -98,11 +98,12 @@ class _PersonalInfoState extends State<PersonalInfo> {
                               showChoiceDialogue(context);
                             },
                             child: Container(
+                              padding: EdgeInsets.all(2),
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle, color: colors.pWhite),
                               child: Icon(
-                                Icons.add,
+                                Icons.camera_enhance,
                                 color: colors.pBlue,
                               ),
                             ),
