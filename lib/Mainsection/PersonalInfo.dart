@@ -103,7 +103,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle, color: colors.pWhite),
                               child: Icon(
-                                Icons.camera_enhance,
+                                Icons.photo_camera,
                                 color: colors.pBlue,
                               ),
                             ),
